@@ -6,7 +6,7 @@ function createObserver(reducer, defaultState) {
 
     function dispatch(type, action) {
         state = reducer(state, type, action);
-        this.listen(type);
+        this.trigger(type);
     }
     function getState() {
         return JSON.parse(JSON.stringify(state));
