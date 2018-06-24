@@ -1,28 +1,11 @@
-//原始数据
-const defaultState = [
-    {
-        name: '帝国',
-        troops: 0
-    },{
-        name: '矮人',
-        troops: 0
-    },{
-        name: '高等精灵',
-        troops: 0
-    },{
-        name: '兽人',
-        troops: 0
-    }
-];
-
-//actionType
+//actionType.js
 const actionAddition = 'Addition';
 const actionSubtraction = 'Subtraction';
 
-//action
+//action.js
 const forceHandling = (type, name) => ({type, name});
 
-//reducer函数
+//reducer.js
 const reducer = (state, type, action) => {
     console.log(type);
     switch(action.type) {
@@ -46,11 +29,45 @@ const reducer = (state, type, action) => {
     }
 }
 
+//原始数据
+const defaultState = [
+    {
+        name: '帝国',
+        troops: 0
+    },{
+        name: '矮人',
+        troops: 0
+    },{
+        name: '高等精灵',
+        troops: 0
+    },{
+        name: '兽人',
+        troops: 0
+    }
+];
+
+//绑定store
+var store = createObserver(reducer, defaultState);
+
+//修改所触发函数
+const getData = () => {
+    let store = window.store.getState();
+    let troopsAll = 0;
+    store.forEach((item, index) => {
+        document.getElementsByClassName('troops-num')[index].innerHTML = item.troops;
+        troopsAll += item.troops;
+    })
+    document.getElementsByClassName('troops-all')[0].innerHTML = troopsAll;
+}
+
+//监听 getData 函数
+store.listen('changeTroops', getData);
+
 //elem
 const root = document.getElementById('root');
 
 //根据原始数据初次渲染页面
-function render(state) {
+(function render(state) {
     let flag = document.createDocumentFragment();
     let ul = document.createElement('ul');
 
@@ -83,6 +100,7 @@ function render(state) {
         li.appendChild(b);
         li.appendChild(p);
 
+
         ul.appendChild(li);
     })
     
@@ -93,13 +111,7 @@ function render(state) {
     flag.appendChild(div);
 
     root.appendChild(flag);
-}
-
-//首次渲染
-render(defaultState);
-
-//绑定store
-var store = createObserver(reducer, defaultState);
+})(defaultState)
 
 //绑定监听事件
 root.addEventListener('click', (e) => {
@@ -109,16 +121,3 @@ root.addEventListener('click', (e) => {
     let target = e.target;
     store.dispatch('changeTroops', forceHandling(target.dataset.key, target.dataset.index));
 })
-
-const getData = () => {
-    let store = window.store.getState();
-    let troopsAll = 0;
-    store.forEach((item, index) => {
-        document.getElementsByClassName('troops-num')[index].innerHTML = item.troops;
-        troopsAll += item.troops;
-    })
-    console.log(troopsAll);
-    document.getElementsByClassName('troops-all')[0].innerHTML = troopsAll;
-}
-
-store.listen('changeTroops', getData);
