@@ -99,7 +99,7 @@ function render(state) {
 render(defaultState);
 
 //绑定store
-let store = createObserver(reducer, defaultState);
+var store = createObserver(reducer, defaultState);
 
 //绑定监听事件
 root.addEventListener('click', (e) => {
@@ -110,8 +110,15 @@ root.addEventListener('click', (e) => {
     store.dispatch('changeTroops', forceHandling(target.dataset.key, target.dataset.index));
 })
 
-function getData() {
-    console.log(store.getState());
+const getData = () => {
+    let store = window.store.getState();
+    let troopsAll = 0;
+    store.forEach((item, index) => {
+        document.getElementsByClassName('troops-num')[index].innerHTML = item.troops;
+        troopsAll += item.troops;
+    })
+    console.log(troopsAll);
+    document.getElementsByClassName('troops-all')[0].innerHTML = troopsAll;
 }
 
 store.listen('changeTroops', getData);
