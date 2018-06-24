@@ -47,7 +47,7 @@ const defaultState = [
 ];
 
 //绑定store
-var store = createObserver(reducer, defaultState);
+var store = uxunk(reducer, defaultState);
 
 //修改所触发函数
 const getData = () => {
