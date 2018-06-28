@@ -83,4 +83,36 @@ function uxunk(reducer, defaultState) {
     };
 }
 
+
+
+function a (state, action) {
+    return "111";
+}
+function b (state, action) {
+    return "222";
+}
+function c (state, action) {
+    return "333";
+}
+function d (state, action) {
+    return "444";
+}
+function e (state, action) {
+    return "555";
+}
+
+function bindReducer (reducers = {}) {
+    console.log(reducers);
+    return function combination(state = {}, action) {
+        return Object.keys(reducers).map((key) => {
+            return reducers[key](state[key], action)
+        })
+    }
+}
+
+bindReducer({
+    a,b,c,d,e
+})
+
+
 export default uxunk;
