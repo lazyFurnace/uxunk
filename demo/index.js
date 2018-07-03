@@ -1,5 +1,3 @@
-import uxunk from './index';
-
 // actionType.js
 const actionAddition = 'Addition';
 const actionSubtraction = 'Subtraction';
@@ -49,11 +47,11 @@ const defaultState = [
 ];
 
 // 绑定store
-const store = uxunk(reducer, defaultState);
+const store = uxunk.createStore(reducer, defaultState);
 
 // 修改所触发函数
 const getData = () => {
-    const storeData = window.store.getState();
+    const storeData = store.getState();
     let troopsAll = 0;
     storeData.forEach((item, index) => {
         document.getElementsByClassName('troops-num')[index].innerHTML = item.troops;
@@ -63,7 +61,7 @@ const getData = () => {
 };
 
 // 监听 getData 函数
-store.listen('changeTroops', getData);
+store.subscribe('changeTroops', getData);
 
 // elem
 const root = document.getElementById('root');
