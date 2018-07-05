@@ -74,10 +74,15 @@ function createStore(reducer, defaultState) {
             throw Error('No related subscriptions!');
         }
     }
+    // 替换reducer
+    function replaceReducer(newReducer) {
+        reducer = newReducer;
+    }
     return {
         subscribe,
         dispatch,
         getState,
+        replaceReducer,
         trigger,
         remove
     };
