@@ -8,6 +8,7 @@
 function createStore(reducer, defaultState) {
     // state 中存放所有数据
     let state = defaultState;
+    let currentReducer = reducer;
 
     /*
      * eventQueue 存放所有发布\订阅的函数
@@ -25,7 +26,7 @@ function createStore(reducer, defaultState) {
      * reducer 返回修改后的所有数据 并触发当前订阅类型下发布给所有订阅的函数
      */
     function dispatch(type, action) {
-        state = reducer(state, type, action);
+        state = currentReducer(state, type, action);
         this.trigger(type);
     }
 
@@ -76,7 +77,7 @@ function createStore(reducer, defaultState) {
     }
     // 替换reducer
     function replaceReducer(newReducer) {
-        reducer = newReducer;
+        currentReducer = newReducer;
     }
     return {
         subscribe,
