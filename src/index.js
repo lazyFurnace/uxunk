@@ -32,3 +32,20 @@ function dispatch(data) {
 var actionCreators = {a,b};
 
 var admin = bindActionCreators(actionCreators, dispatch)
+
+function compose(...funs) {
+    let newFuns = funs.reduce((a, b) => {
+        return (...arg) => {
+            return a(b(...arg))
+        }
+    })
+    console.log(newFuns);
+}
+function a(data) {
+    return data;
+}
+function b(data) {
+    return data;
+}
+
+
