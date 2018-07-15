@@ -1,98 +1,11 @@
+import bindActionCreators from './bindActionCreators';
 import combineReducers from './combineReducers';
 import createStore from './createStore';
+import compose from './compose';
 
 export {
+    bindActionCreators,
     combineReducers,
+    compose,
     createStore
 };
-
-
-
-function bindActionCreators(actionCreators, dispatch) {
-    let boundActionCreators = {};
-    Object.keys(actionCreators).forEach(item => {
-        let actionCreator = actionCreators[item];
-        boundActionCreators[item] = (
-            (actionCreator, dispatch) => (...arg) => dispatch(actionCreator(arg))
-        )(actionCreator, dispatch)
-    })
-    return boundActionCreators;
-}
-
-function a(data) {
-    return data;
-}
-function b(data) {
-    return data;
-}
-function dispatch(data) {
-    console.log(data);
-}
-
-var actionCreators = {a,b};
-
-var admin = bindActionCreators(actionCreators, dispatch)
-
-function compose(...funs) {
-    let newFuns = funs.reduce((a, b) => {
-        return (...arg) => {
-            return a(b(...arg))
-        }
-    })
-    console.log(newFuns);
-}
-function a(data) {
-    return data;
-}
-function b(data) {
-    return data;
-}
-
-// new
-
-
-function bindActionCreators(actionCreators, dispatch) {
-    let boundActionCreators = {};
-    Object.keys(actionCreators).forEach(item => {
-        let actionCreator = actionCreators[item];
-        boundActionCreators[item] =  (...arg) => dispatch(actionCreator(...arg))
-    })
-    return boundActionCreators;
-}
-
-function a(data) {
-    return data;
-}
-function b(data) {
-    return data;
-}
-function dispatch(data) {
-    console.log(data);
-}
-
-var actionCreators = {a,b};
-
-var admin = bindActionCreators(actionCreators, dispatch)
-
-
-function compose(...funs) {
-    return funs.reduce((a, b) => {
-        return (...arg) => {
-            return a(b(...arg))
-        }
-    })
-}
-function a(data) {
-    console.log(data)
-    return 'aaa';
-}
-function b(data) {
-    console.log(data)
-    return 'bbb';
-}
-function c(data) {
-    console.log(data)
-    return 'ccc';
-}
-var hahaha = compose(a, b, c);
-
