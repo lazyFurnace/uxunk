@@ -12,28 +12,56 @@ function compose(...funs) {
 }
   
 function thunk() {
-    return (next) => action => {
+    return (next) => {
 
-        console.log('这是 thunk 函数');
-    
-        return next(action);
-    };
+        console.log('thunk 外层函数执行')
+        console.log(next);
+
+        return (action) => {
+
+            console.log('这是 thunk 函数');
+        
+            return next(action);
+        };
+    }
 }
 
 function logger() {
-    return (next) => (action) => {
-		console.log(next)
-        console.log('这是 logger 函数')
+    return (next) => {
 
-        return next(action)
+        console.log('logger 外层函数执行')
+        console.log(next);
+
+        return (action) => {
+        
+            console.log('这是 logger 函数')
+
+            return next(action)
+        }
     }
 }
-var middlewares = [thunk , logger];
+
+function bugger() {
+    return (next) => {
+
+        console.log('bugger 外层函数执行')
+        console.log(next);
+
+        return (action) => {
+        
+            console.log('这是 bugger 函数')
+
+            return next(action)
+        }
+    }
+}
+
+var middlewares = [thunk , logger, bugger];
 var chain = middlewares.map(middleware => middleware());
 
 var dispatch = (data) => {
     console.log(data)
-    return data;
+    return '执行完成返回 action'
 }
 
 var admin = compose(...chain)(dispatch)
