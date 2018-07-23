@@ -2,19 +2,19 @@
  * combineReducers 实现
  * 函数的作用是将多个 reducer 按照 key: value 组成一个更大的 reducer
  * 接收一个参数 reducers
- * 
+ *
  * @param {Object} reducers 是将多个 reducer 组合成的对象
- * 
+ *
  * @return {Function} 返回真正替代 reducer 的函数
  */
 export default function combineReducers(reducers = {}) {
     /**
-     * combineReducers 函数返回一个 function 
+     * combineReducers 函数返回一个 function
      * 这个函数是真正的 reducer 接收两个参数
-     * 
+     *
      * @param {Object} state 这个是整体的默认状态
      * @param {Object} action 用来触发 reducer 的对象，必有字段 action.type
-     * 
+     *
      * @return {Object} 返回完成的 state
      */
     return function combination(state = {}, action) {
@@ -24,10 +24,10 @@ export default function combineReducers(reducers = {}) {
          * 将对应返回的 state 放入 nextState 中
          * 返回 nextState
          */
-        let nextState = {};
-        Object.keys(reducers).forEach(key => (
-            nextState[key] = reducers[key](state[key], action)
-        ));
+        const nextState = {};
+        Object.keys(reducers).forEach((key) => {
+            nextState[key] = reducers[key](state[key], action);
+        });
         return nextState;
     };
 }
@@ -46,7 +46,7 @@ let state = {
         goodGirl: false,
         text: ''
     }
-}
+};
 
 // 模拟 actionType
 const loginActionType = 'LOGIN/ACTION';
@@ -57,43 +57,43 @@ const loginAction = {
     type: loginActionType,
     name: '梅乐凯',
     id: 1
-}
+};
 const indexAction = {
     type: indexActionType,
     isPeople: true,
     text: '愚蠢的人类啊！'
-}
+};
 
-//模拟 reducer
+// 模拟 reducer
 function loginReducer(state, action) {
-    switch(action.type) {
-        case loginActionType:
-            return {
-                login: true,
-                name: action.name,
-                id: action.id
-            };
-        default:
-            return state;
+    switch (action.type) {
+    case loginActionType:
+        return {
+            login: true,
+            name: action.name,
+            id: action.id
+        };
+    default:
+        return state;
     }
 }
 
 function indexReducer(state, action) {
-    switch(action.type) {
-        case indexActionType:
-            return {
-                shopBoy: action.isPeople,
-                goodGirl: action.isPeople,
-                text: action.text
-            };
-        default:
-            return state;
+    switch (action.type) {
+    case indexActionType:
+        return {
+            shopBoy: action.isPeople,
+            goodGirl: action.isPeople,
+            text: action.text
+        };
+    default:
+        return state;
     }
 }
 
 // 组合 reducers
 const text = combineReducers({
-    loginState: loginReducer, 
+    loginState: loginReducer,
     indexState: indexReducer
 });
 
