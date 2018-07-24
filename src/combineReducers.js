@@ -35,7 +35,7 @@ export default function combineReducers(reducers = {}) {
 // ---- 找机会写个单元测试 ----
 
 // 模拟 state
-let state = {
+let stateSimulation = {
     loginState: {
         login: false,
         name: '',
@@ -97,7 +97,8 @@ const text = combineReducers({
     indexState: indexReducer
 });
 
-state = text(state, loginAction);
-console.log(state);
-state = text(state, indexAction);
-console.log(state);
+stateSimulation = text(stateSimulation, loginAction);
+console.log(stateSimulation);
+
+stateSimulation = text(stateSimulation, indexAction);
+console.log(stateSimulation);
