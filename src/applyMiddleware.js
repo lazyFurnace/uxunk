@@ -1,3 +1,4 @@
+import compose from './compose';
 /**
  * applyMiddleware 实现
  * 函数的作用是将你在 redux 中用到的所有中间件组合起来
@@ -18,6 +19,13 @@ function applyMiddleware(...middlewares) {
      * 两次接收后创建 store
      */
     return (createStore) => (...arg) => {
+        /**
+         * 讲一下中间件的格式，中间件是一个柯里化的函数
+         * ({ dispatch, getState }) => next => action => { ... }
+         * 第一层接收一个对象，里面是 getState 和 dispatch 方法
+         * 第二层接收 next 是下一个中间件的函数，如果是最后一个 next 就是 store 的 dispatch 方法(不是后面声明的那个)
+         * 第三层就是触发 dispatch 的 action 和我们了解的 redux 一样
+         */
         const store = createStore(...arg);
         /**
          * 写一个空的 dispatch 函数，这个 dispatch 将是用来链式触发中间件的 dispatch 方法
@@ -31,8 +39,13 @@ function applyMiddleware(...middlewares) {
             getState: store.getState,
             dispatch: (...arg) => dispatch(...arg)
         };
+        /**
+         * 遍历传入的所有中间件，执行所有中间件的第一层函数，传入 getState 和 dispatch 方法
+         */
         const chain = middlewares.map((middleware) => middleware(middlewareAPI));
-        
+        /**
+         * 我们将这部分拆开来看，首先 compose(...chain)
+         */
         dispatch = compose(...chain)(store.dispatch);
 
         return {
