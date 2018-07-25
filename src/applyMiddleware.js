@@ -1,12 +1,25 @@
+/**
+ * applyMiddleware 实现
+ * 函数的作用是将你在 redux 中用到的所有中间件组合起来
+ * 等待触发 dispatch 时依次触发所有中间件
+ * 接收一个参数 middlewares 中间件们
+ * @param {...Function} middlewares 所有中间件都是函数
+ * 
+ * @return {Function} 返回一个可以接收 createStore 的函数 
+ * 在使用这个函数的情况下 store 的创建将在这个函数中进行
+ */
 function applyMiddleware(...middlewares) {
     return (createStore) => (...arg) => {
         const store = createStore(...arg);
-        let dispatch = store.dispatch;
+
+        let dispatch = () => {};
+
         const middlewareAPI = {
             getState: store.getState,
-            dispatch: () => dispatch()
+            dispatch: (...arg) => dispatch(...arg)
         };
         const chain = middlewares.map((middleware) => middleware(middlewareAPI));
+        
         dispatch = compose(...chain)(store.dispatch);
 
         return {
