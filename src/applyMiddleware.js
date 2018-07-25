@@ -45,9 +45,20 @@ function applyMiddleware(...middlewares) {
         const chain = middlewares.map((middleware) => middleware(middlewareAPI));
         /**
          * 我们将这部分拆开来看，首先 compose(...chain)
+         * 经过这一步我们得到的是 (...arg) => 中间件1(中间件2(中间件3(...arg))) 这样的函数
+         * compose(...chain)(store.dispatch)
+         * arg = store.dispatch 中间件3的 next 就是 store.dispatch 函数，中间件3返回的函数 action => { ... }
+         * 中间件2接收中间件3返回的 action => { ... } 作为中间件2的 next 然后返回自己的 action => { ... }
+         * 最后返回中间件1的 action => { ... } ，中间件1的 next 是中间件2的 action => { ... } ,依次类推... 
+         * 当我们执行中间件1的 action => { ... } 中触发中间件1的 next 开始执行中间件2的 action => { ... } ,依次类推... 
+         * 最后执行中间件3的 next ，调用了 store.dispatch 函数
+         * 相当于这个 dispatch 是用来触发所有中间件的，执行完所有中间件后，将执行真正的 store.dispatch 函数
          */
         dispatch = compose(...chain)(store.dispatch);
 
+        /**
+         * 将 store 的其他函数与经过封装的 dispatch 一同返回，形成新的完整的 store
+         */
         return {
             dispatch,
             ...store
