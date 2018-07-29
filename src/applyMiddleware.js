@@ -69,7 +69,7 @@ export default function applyMiddleware(...middlewares) {
 // ---- 找机会写个单元测试(因为这个模块需要配合 createStore 所以在这里只单独对功能经行测试) ----
 
 // 模拟 compose
-function compose(...funs) {
+function simulationCompose(...funs) {
     return funs.reduce((a, b) => (...arg) => a(b(...arg)));
 }
 
@@ -120,6 +120,6 @@ const dispatch = (data) => {
     return '执行完成返回 action';
 };
 
-const test = compose(...chain)(dispatch);
+const test = simulationCompose(...chain)(dispatch);
 
 test('applyMiddleware 测试');
