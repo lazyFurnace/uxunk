@@ -9,7 +9,7 @@ import compose from './compose';
  * @return {Function} 返回一个可以接收 createStore 的函数 
  * 在使用这个函数的情况下 store 的创建将在这个函数中进行
  */
-function applyMiddleware(...middlewares) {
+export default function applyMiddleware(...middlewares) {
     /**
      * 配合 createStore 中的 enhancer 来实现有中间件的 store 的创建
      * 有中间件的 store 会在触发 dispatch 后，执行 reducer 前执行所有的中间件
@@ -66,11 +66,14 @@ function applyMiddleware(...middlewares) {
     }
 }
 
+// ---- 找机会写个单元测试 ----
 
+// 模拟 compose
 function compose(...funs) {
     return funs.reduce((a, b) => (...arg) => a(b(...arg)));
 }
 
+// 三个中间件
 function thunk() {
     return (next) => {
         console.log('thunk 外层函数执行');
@@ -83,7 +86,6 @@ function thunk() {
         };
     };
 }
-
 function logger() {
     return (next) => {
         console.log('logger 外层函数执行');
@@ -96,7 +98,6 @@ function logger() {
         };
     };
 }
-
 function bugger() {
     return (next) => {
         console.log('bugger 外层函数执行');
@@ -110,6 +111,7 @@ function bugger() {
     };
 }
 
+// 模拟 applyMiddleware 执行过程
 const middlewares = [thunk, logger, bugger];
 const chain = middlewares.map(middleware => middleware());
 
@@ -118,6 +120,6 @@ const dispatch = (data) => {
     return '执行完成返回 action';
 };
 
-const admin = compose(...chain)(dispatch);
+const test = compose(...chain)(dispatch);
 
-admin('wodetian');
+test('applyMiddleware 测试');
