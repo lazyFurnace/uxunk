@@ -1,11 +1,17 @@
-// react-uxunk
-/*
- * uxunk 基于观察者模式、发布/订阅，参考的redux
- * uxunk 接收两个参数 reducer 和 defaultState
- * reducer 是处理以后所有数据关系的函数
- * defaultState 是默认的数据
+/**
+ * react-uxunk 
+ * 按照 redux 源码进行仿制
+ * 发布/订阅模式
+ * 拥有 redux 的几乎所有功能
+ * @param {Function} reducer 用于存放所有的数据处理逻辑
+ * 
+ * @param {Object} defaultState 默认的初始化 state
+ * 
+ * @param {Function} enhancer 为 redux 提供所有中间件
+ * 
+ * @return {Object} 返回 store 里面包含 redux 所有数据及方法
  */
-function createStore(reducer, defaultState) {
+export default function createStore(reducer, defaultState, enhancer) {
     // state 中存放所有数据
     let state = defaultState;
     let currentReducer = reducer;
@@ -88,5 +94,3 @@ function createStore(reducer, defaultState) {
         remove
     };
 }
-
-export default createStore;
