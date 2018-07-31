@@ -37,4 +37,4 @@ function c1(data) {
     return data;
 }
 
-const test = compose(a1, b1, c1);
+compose(a1, b1, c1);

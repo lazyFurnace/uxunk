@@ -54,4 +54,4 @@ function simulationDispatch(action) {
     return result;
 }
 
-const test = bindActionCreators(actionCreators, simulationDispatch);
+bindActionCreators(actionCreators, simulationDispatch);
