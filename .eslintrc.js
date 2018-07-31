@@ -33,10 +33,17 @@ module.exports = {
     ],
     // 定义自己的规则
     "rules": {
-        "linebreak-style": ["off", "windows"],  //换行符设置
-        "comma-dangle": ["error", "never"], // 要求或禁止末尾逗号：不允许逗号
-        "indent": ["error", 4], // JavaScript代码强制使用一致的缩进：4格缩进
-        "react/jsx-indent": ["error", 4],  //react jsx-indent 4缩进
-        "react/jsx-indent-props": ["error", 4],  //react jsx-indent-props 4缩进
+        // 换行符设置
+        "linebreak-style": ["off", "windows"],
+        // 要求或禁止末尾逗号：不允许逗号
+        "comma-dangle": ["error", "never"],
+        // JavaScript代码强制使用一致的缩进：4格缩进
+        "indent": ["error", 4],
+        // react jsx-indent 4缩进
+        "react/jsx-indent": ["error", 4],
+        // react jsx-indent-props 4缩进
+        "react/jsx-indent-props": ["error", 4],
+        // 关闭禁止给参数重新赋值，因为 redux 的 enhancer 需要重新赋值
+        "no-param-reassign": [0, {"props": false}] 
     }    
   };
