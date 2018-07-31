@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "eslint": "npx eslint src/**/*.js src/**/*.jsx",
-    "rollup": "npx rollup -c"
+    "rollup": "npx cross-env NODE_ENV=library rollup -c",
+    "example": "npx cross-env NODE_ENV=example rollup -c"
   },
   "repository": {
     "type": "git",
@@ -23,6 +24,7 @@
   },
   "homepage": "https://github.com/liqiUser/react-uxunk#readme",
   "devDependencies": {
+    "cross-env": "^5.2.0",
     "eslint": "^4.19.1",
     "eslint-config-airbnb": "^17.0.0",
     "eslint-plugin-import": "^2.13.0",
