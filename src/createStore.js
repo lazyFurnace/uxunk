@@ -73,6 +73,7 @@ export default function createStore(reducer, defaultState, enhancer) {
 
     /**
      * replaceReducer 函数，接收一个新的 reducer 代替旧的
+     * 
      * @param {*} newReducer
      */
     function replaceReducer(newReducer) {
