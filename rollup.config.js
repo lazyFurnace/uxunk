@@ -19,7 +19,7 @@ switch (ENV) {
         break;
     case 'example':
         rollupModule = {
-            input: './example/index.js',
+            input: './example/index.jsx',
             output: {
                 file: './component/index.js',
                 format: 'umd',
