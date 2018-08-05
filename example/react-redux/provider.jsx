@@ -1,8 +1,6 @@
 import React from 'react';
 
-import store from '../store';
-
-const { Provider , Consumer } = React.createContext({...store});
+const { Provider , Consumer } = React.createContext();
 
 export { Consumer };
 
