@@ -5,8 +5,7 @@
   "main": "index.js",
   "scripts": {
     "eslint": "npx eslint src/**/*.js src/**/*.jsx",
-    "rollup": "npx cross-env NODE_ENV=library rollup -c",
-    "example": "npx cross-env NODE_ENV=example rollup -c"
+    "rollup": "npx cross-env rollup -c"
   },
   "repository": {
     "type": "git",
