@@ -34,6 +34,10 @@ export default function createStore(reducer, defaultState, enhancer) {
      * @return {Object} 执行后返回 action
      */
     function dispatch(action) {
+        if (typeof action === 'function') {
+            action();
+            return false;
+        }
         currentState = currentReducer(currentState, action);
         currentListeners.forEach(item => item());
         return action;
