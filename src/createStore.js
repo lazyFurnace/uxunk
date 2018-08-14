@@ -34,6 +34,10 @@ export default function createStore(reducer, defaultState, enhancer) {
      * @return {Object} 执行后返回 action
      */
     function dispatch(action) {
+        /**
+         * 内置 redux-thunk
+         * 判断如果 action 是一个 function 就执行它
+         */
         if (typeof action === 'function') {
             action();
             return false;
