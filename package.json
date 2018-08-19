@@ -31,9 +31,5 @@
     "eslint-plugin-react": "^7.10.0",
     "rollup": "^0.62.0"
   },
-  "dependencies": {
-    "prop-types": "^15.6.2",
-    "react": "^16.4.1",
-    "react-dom": "^16.4.1"
-  }
+  "dependencies": {}
 }

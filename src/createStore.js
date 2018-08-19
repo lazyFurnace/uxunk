@@ -1,5 +1,5 @@
 /**
- * react-uxunk
+ * uxunk
  * 按照 redux 源码进行仿制
  * 发布/订阅模式
  * 拥有 redux 的几乎所有功能
