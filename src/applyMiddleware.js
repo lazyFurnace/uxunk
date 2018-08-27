@@ -59,9 +59,6 @@ export default function applyMiddleware(...middlewares) {
         /**
          * 将 store 的其他函数与经过封装的 dispatch 一同返回，形成新的完整的 store
          */
-        return {
-            ...store,
-            dispatch
-        };
+        return Object.assign({ dispatch }, store);
     };
 }
